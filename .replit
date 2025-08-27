@@ -1,0 +1,32 @@
+modules = ["python-3.12", "nodejs-20", "web", "java-graalvm22.3"]
+run = "npm run dev"
+
+[nix]
+channel = "stable-25_05"
+
+[deployment]
+run = ["sh", "-c", "npm run dev"]
+
+[workflows]
+runButton = "List Agents"
+
+[[workflows.workflow]]
+name = "List Agents"
+author = 22508762
+mode = "sequential"
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "echo \"Available Python agents:\""
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "find python/agents -maxdepth 1 -type d -not -path \"python/agents\" | sort"
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "echo \"\""
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "echo \"To run a specific agent, navigate to its directory and follow its README instructions.\""
